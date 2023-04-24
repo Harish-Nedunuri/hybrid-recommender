@@ -1,0 +1,8 @@
+{
+    "input_table":"register_raw/raw_data.csv",
+    "output_fields": ["product","brand","sale_price","rating"],
+    "output_table":"model_output/content_output.csv",
+    "data_dir":"/mnt/d/hybrid-recommender/hive_metastore_csv_clone/",
+    "user_prompt":"Dog Supplement - Absolute Skin + Coat Tablet"
+   
+}

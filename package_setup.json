@@ -1,0 +1,11 @@
+{
+    "package_name": "hybrid_recommender",
+    "package_version": "0.1.0",
+    "package_description": "Recommendation based on a hybrid approach",
+    "tasks": [
+        "ModelBasedRecommender",
+        "PopularityBasedRecommender",
+        "ContentBasedRecommender",
+        "WeightedHybridRecommender"
+    ]
+}

@@ -1,0 +1,1 @@
+from hybrid_recommender.PopularityBasedRecommender.entry import main

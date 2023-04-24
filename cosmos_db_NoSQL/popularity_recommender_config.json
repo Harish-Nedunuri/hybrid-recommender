@@ -1,0 +1,8 @@
+{
+    "sort_field": "sale_price",
+    "rating_threshold": 3.5,
+    "input_table":"register_raw/raw_data.csv",
+    "output_fields": ["product","brand","sale_price","rating"],
+    "output_table":"model_output/popularity_output.csv",
+    "data_dir":"/mnt/d/hybrid-recommender/hive_metastore_csv_clone/"
+}

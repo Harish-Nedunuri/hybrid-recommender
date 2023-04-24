@@ -1,0 +1,142 @@
+{
+  "name": "<JOB_NAME>:<JOB_VERSION>",
+  "email_notifications": {
+    "on_failure": [
+      "<FAIL_NOTIFICATION_EMAIL>"
+    ],
+    "no_alert_for_skipped_runs": false
+  },
+  "timeout_seconds": 0,
+  "max_concurrent_runs": 1,
+  "tasks": [
+    {
+      "task_key": "PopularityBasedRecommender",
+      "python_wheel_task": {
+        "package_name": "<MODULE_NAME>",
+        "entry_point": "PopularityBasedRecommender.entry.main",
+        "named_parameters": {          
+          "input_table": "register_raw.raw_data.csv",
+          "output_table": "model_output.hybrid_recommender"
+        }
+      },
+      "libraries": [
+        {
+          "pypi": {
+            "package": "<MODULE_NAME>==<MODULE_VERSION>"
+          }
+        }
+      ],
+      "job_cluster_key": "hybrid_recommender_cluster",
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "description": ""
+    },
+    {
+      "task_key": "ContentBasedRecommender",
+      "python_wheel_task": {
+        "package_name": "<MODULE_NAME>",
+        "entry_point": "ContentBasedRecommender.entry.main",
+        "named_parameters": {          
+          "input_table": "register_raw.raw_data.csv",
+          "output_table": "model_output.content_recommender.csv"
+        }
+      },
+      "libraries": [
+        {
+          "pypi": {
+            "package": "<MODULE_NAME>==<MODULE_VERSION>"
+          }
+        }
+      ],
+      "job_cluster_key": "hybrid_recommender_cluster",
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "description": ""
+    },
+    {
+      "task_key": "ModelBasedRecommender",
+      "python_wheel_task": {
+        "package_name": "<MODULE_NAME>",
+        "entry_point": "ModelBasedRecommender.entry.main",
+        "named_parameters": {          
+          "input_table": "register_raw.raw_data.csv",
+          "output_table": "model_output.model_recommender.csv"
+        }
+      },
+      "libraries": [
+        {
+          "pypi": {
+            "package": "<MODULE_NAME>==<MODULE_VERSION>"
+          }
+        }
+      ],
+      "job_cluster_key": "hybrid_recommender_cluster",
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "description": ""
+    },
+    {
+      "task_key": "ContentBasedRecommender",
+      "python_wheel_task": {
+        "package_name": "<MODULE_NAME>",
+        "entry_point": "ContentBasedRecommender.entry.main",
+        "named_parameters": {          
+          "input_table": "register_raw.raw_data.csv",
+          "output_table": "model_output.hybrid_recommender"
+        }
+      },
+      "libraries": [
+        {
+          "pypi": {
+            "package": "<MODULE_NAME>==<MODULE_VERSION>"
+          }
+        }
+      ],
+      "job_cluster_key": "hybrid_recommender_cluster",
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "description": ""
+    }
+  ],
+  "job_clusters": [
+    {
+      "job_cluster_key": "hybrid_recommender_cluster",
+      "new_cluster": {
+        "cluster_name": "",
+        "spark_version": "9.1.x-cpu-ml-scala2.12",
+        "spark_conf": {
+          "spark.databricks.delta.preview.enabled": "true",
+          "spark.master": "local[*, 4]",
+          "spark.databricks.cluster.profile": "singleNode"
+        },
+        "cluster_log_conf": {
+          "dbfs": {
+            "destination": "dbfs:/mnt/logs/<JOB_NAME>"
+          }
+        },
+        "init_scripts": [
+          {
+            "dbfs": {
+              "destination": "dbfs:/databricks/scripts/init-scripts/set-private-pip-repositories.sh"
+            }
+          }
+        ],
+        "custom_tags": {
+          "ResourceClass": "SingleNode",
+          "environment": "<ENV>",
+          "analytics_job": "<JOB_NAME>"
+        },
+        "spark_env_vars": "<ENV_VARS>",
+        "instance_pool_id": "<DEMAND_CPU_INSTANCE_POOL>",
+        "driver_instance_pool_id": "<DEMAND_CPU_INSTANCE_POOL>",
+        "runtime_engine": "STANDARD",
+        "num_workers": 0
+      }
+    }
+  ],
+  "format": "MULTI_TASK",
+  "tags": {
+    "environment": "<ENV>",
+    "analytics_job": "<JOB_NAME>"
+  }
+}
